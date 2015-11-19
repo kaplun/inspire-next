@@ -293,14 +293,16 @@ SEARCH_ELASTIC_KEYWORD_MAPPING = {
     "author": {
         'a': ["authors.full_name"],
         'p': ["authors.full_name"],
-        'e': ['exactauthor.raw'],
+        'e': ['exactauthor.raw']
     },
     "abstract": ["abstracts.value"],
     "collection": ["_collections"],
     "doi": ["dois.value"],
+    "doc_type": ["facet_inspire_doc_type"],
     "affiliation": ["authors.affiliations.value"],
     "reportnumber": ["report_numbers.value"],
     "experiment": ["accelerator_experiments.experiment"],
+    "subject": ["field_code.value"],
     "eprint": ["arxiv_eprints.value"],
     "title": ["titles.title"],
     "subject": ["facet_inspire_subjects"],
@@ -316,11 +318,18 @@ SEARCH_ELASTIC_KEYWORD_MAPPING = {
     "542__l": ["information_relating_to_copyright_status.copyright_status"],
 }
 
+FACETS_SIZE_LIMIT = 10
+
 SEARCH_ELASTIC_AGGREGATIONS = {
     "hep": {
         "subject": {
             "terms": {
                 "field": "facet_inspire_subjects"
+            }
+        },
+        "doc_type": {
+            "terms": {
+                "field": "facet_inspire_doc_type"
             }
         },
         "author": {
@@ -337,6 +346,72 @@ SEARCH_ELASTIC_AGGREGATIONS = {
             "date_histogram": {
                 "field": "earliest_date",
                 "interval": "year"
+            }
+        }
+    },
+    "conferences": {
+        "series": {
+                "terms": {
+                    "field": "series"
+                }
+            },
+        "subject": {
+                "terms": {
+                    "field": "field_code.value"
+                }
+            },
+        "opening_date": {
+            "date_histogram": {
+                "field": "opening_date",
+                "interval": "year"
+            }
+        }
+    },
+    "experiments": {
+        "field_code": {
+            "terms": {
+                "field": "field_code"
+            }
+        },
+        "wwwlab": {
+            "terms": {
+                "field": "experiment_name.wwwlab"
+            }
+        },
+        "accelerator": {
+            "terms": {
+                "field": "accelerator"
+            }
+        }
+    },
+    "journals": {
+        "publisher": {
+            "terms": {
+                "field": "publisher"
+            }
+        }
+    },
+    "institutions": {
+        "country": {
+            "terms": {
+                "field": "address.country"
+            }
+        }
+    },
+    "jobs": {
+        "continent": {
+            "terms": {
+                "field": "continent"
+            }
+        },
+        "rank": {
+            "terms": {
+                "field": "rank"
+            }
+        },
+        "research_area": {
+            "terms": {
+                "field": "research_area"
             }
         }
     }
