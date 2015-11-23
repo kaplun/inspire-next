@@ -41,15 +41,14 @@
   <div id="doi-eprint-experiment">
     {{ record_doi() }}
     {{ record_arxiv(is_brief=false) }}
+    <div class="cite-pdf-buttons pull-right">
+      <div class="btn-group">
+        {{ record_buttons() }}
+      </div>
+    </div>
   </div>
-  <hr/>
   <div id="external_links">  
     {{ record_links() }}
-  </div>
-  <div class="cite-pdf-buttons">
-    <div class="btn-group">
-      {{ record_buttons() }}
-    </div>
   </div>
 {% endblock header %}
 {% block details %}
@@ -76,12 +75,15 @@
   </div>
   <script type="text/javascript">
     require(["jquery",
+             "js/citation_modal",
              "js/plots"],
              function($,
+                 CitationsModal,
                  Plots) {
       var context = {
       }
       Plots.attachTo(document, context);
+      CitationsModal.attachTo(document, context);
     });
   </script>
 {% endblock details %}

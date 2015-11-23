@@ -198,12 +198,14 @@
              "js/search/facets_filter",
              "js/search/search",
              "js/search/facets_menu",
-             "js/search/search_results"],
+             "js/search/search_results",
+             "js/citation_modal"],
              function($,
                  FacetsFilter,
                  Search,
                  FacetsMenu,
-                 SearchResults) {
+                 SearchResults,
+                 CitationsModal) {
       var facetsFilter = new FacetsFilter({{ filtered_facets | tojson | safe }});
       var context = {
         searchUrl: '{{ url_for('search.search', cc=collection.name) }}',
@@ -219,6 +221,7 @@
       FacetsMenu.attachTo(context.facetsMenuSelector, context);
       Search.attachTo(document, context);
       SearchResults.attachTo(document, context);
+      CitationsModal.attachTo(document, context);
       $(document).trigger("initSearch");
     });
   </script>
