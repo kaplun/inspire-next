@@ -73,6 +73,17 @@ def get_es_record(record_type, recid):
 
 
 @raise_record_getter_error_and_log
+def get_es_record_from_doc_type(record_type, recid, collection):
+    pid = PersistentIdentifier.get(record_type, recid)
+    search_conf = current_app.config['RECORDS_REST_ENDPOINTS'][collection]
+
+    return es.get_source(
+        index=search_conf['search_index'],
+        id=str(pid.object_uuid),
+        doc_type=search_conf['search_type'])
+
+
+@raise_record_getter_error_and_log
 def get_db_record(record_type, recid):
     pid = PersistentIdentifier.get(record_type, recid)
     return Record.get_record(pid.object_uuid)

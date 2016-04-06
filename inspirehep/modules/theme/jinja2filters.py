@@ -45,6 +45,10 @@ from invenio_search import current_search_client as es
 from .views import blueprint
 from inspirehep.utils.template import render_macro_from_template
 from inspirehep.modules.records.json_ref_loader import replace_refs
+from inspirehep.utils.bibtex import Bibtex
+from inspirehep.utils.latex import Latex
+from inspirehep.utils.cv_latex import Cv_latex
+from inspirehep.utils.cv_latex_html_text import Cv_latex_html_text
 
 
 def apply_template_on_array(array, template_path, **common_context):
